@@ -20,5 +20,6 @@ int ordonnee(Robot *r) { return r->y; }
 Orientation orient(Robot *r) { return r->o; }
 
 void position_devant(Robot *r, int *x, int *y) {
-  *x = (r->x) * (r->o & 1), *y = (r->y) * (r->o + 1 & 1);
+  *x = r->x + (r->o & 1) * (2 - r->o);
+  *y = r->y + ((r->o + 1) & 1) * (1 - r->o);
 }
