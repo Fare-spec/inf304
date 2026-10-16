@@ -122,3 +122,31 @@ void afficher_terrain(Terrain *t) {
     printf("\n");
   }
 }
+
+int hauteur(Terrain *t) { return t->hauteur; }
+int largeur(Terrain *t) { return t->largeur; }
+int est_case_libre(Terrain *t, int x, int y) { return t->tab[x][y] == LIBRE; }
+void ecrire_terrain(FILE *f, Terrain *t, int x, int y) {
+  fprintf(f, "%d\n%d\n", t->largeur, t->hauteur);
+
+  for (int j = 0; j < t->hauteur; j++) {
+    for (int i = 0; i < t->largeur; i++) {
+      if (i == x && j == y) {
+        fputc('C', f);
+      } else {
+        switch (t->tab[i][j]) {
+        case LIBRE:
+          fputc('.', f);
+          break;
+        case ROCHER:
+          fputc('#', f);
+          break;
+        case EAU:
+          fputc('~', f);
+          break;
+        }
+      }
+    }
+    fputc('\n', f);
+  }
+}

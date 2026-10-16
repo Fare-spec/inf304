@@ -82,7 +82,7 @@ int robot_peut_avancer(Terrain *t, Robot *r) {
   int x, y;
   position_devant(r, &x, &y);
 
-  if (x < 0 || x >= largeur(t) || y < 0 || y >= hauteur(t)) {
+  if (x < 0 || x >= t->largeur || y < 0 || y >= t->hauteur) {
     return 1;
   }
 
