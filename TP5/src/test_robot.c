@@ -48,10 +48,11 @@ int main(int argc, char **argv) {
 
   // In the assignement those are uppercase, here lowercase... So I choose to
   // normalize the treatment.
-  if (c >= 'A' && c <= 'Z') {
-    c = c - 'A' + 'a';
-  } // Here
-  while (c != 'f') {
+  while (c != 'f' && c != 'F') {
+
+    if (c >= 'A' && c <= 'Z') {
+      c = c - 'A' + 'a';
+    } // Here
     switch (c) {
     case 'a':
       avancer(&r);
@@ -59,7 +60,7 @@ int main(int argc, char **argv) {
     case 'g':
       tourner_a_gauche(&r);
       break;
-    case 'r':
+    case 'd':
       tourner_a_droite(&r);
       break;
     case 'f':

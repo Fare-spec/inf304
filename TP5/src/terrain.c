@@ -125,13 +125,53 @@ void afficher_terrain(Terrain *t) {
 
 int hauteur(Terrain *t) { return t->hauteur; }
 int largeur(Terrain *t) { return t->largeur; }
-int est_case_libre(Terrain *t, int x, int y) { return t->tab[x][y] == LIBRE; }
+int est_case_libre(Terrain *t, int x, int y) {
+  return x >= 0 && x < t->largeur && y >= 0 && y < t->hauteur &&
+         t->tab[x][y] == LIBRE;
+}
+
 void ecrire_terrain(FILE *f, Terrain *t, int x, int y) {
+  if (f == NULL || t == NULL || t->largeur <= 0 || t->hauteur <= 0) {
+    return;
+  }
+
+  int rx = x;
+  int ry = y;
+
+  if (rx < 0) {
+    rx = 0;
+  } else if (rx >= t->largeur) {
+    rx = t->largeur - 1;
+  }
+
+  if (ry < 0) {
+    ry = 0;
+  } else if (ry >= t->hauteur) {
+    ry = t->hauteur - 1;
+  }
+
+  if (rx != x || ry != y) {
+    if (!est_case_libre(t, rx, ry)) {
+      int trouve = 0;
+      for (int j = 0; j < t->hauteur && !trouve; j++) {
+        for (int i = 0; i < t->largeur && !trouve; i++) {
+          if (est_case_libre(t, i, j)) {
+            rx = i;
+            ry = j;
+            trouve = 1;
+          }
+        }
+      }
+    }
+    fprintf(stderr, "Robot hors du terrain (%d, %d), sauvegarde en (%d, %d)\n",
+            x, y, rx, ry);
+  }
+
   fprintf(f, "%d\n%d\n", t->largeur, t->hauteur);
 
   for (int j = 0; j < t->hauteur; j++) {
     for (int i = 0; i < t->largeur; i++) {
-      if (i == x && j == y) {
+      if (i == rx && j == ry) {
         fputc('C', f);
       } else {
         switch (t->tab[i][j]) {
@@ -143,6 +183,9 @@ void ecrire_terrain(FILE *f, Terrain *t, int x, int y) {
           break;
         case EAU:
           fputc('~', f);
+          break;
+        default:
+          fputc('.', f);
           break;
         }
       }

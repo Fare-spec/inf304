@@ -82,11 +82,11 @@ int robot_peut_avancer(Terrain *t, Robot *r) {
   int x, y;
   position_devant(r, &x, &y);
 
-  if (x < 0 || x >= t->largeur || y < 0 || y >= t->hauteur) {
+  if (x < 0 || x >= largeur(t) || y < 0 || y >= hauteur(t)) {
     return 1;
   }
 
-  return t->tab[x][y] == LIBRE;
+  return est_case_libre(t, x, y);
 }
 
 int main(int argc, char **argv) {
@@ -106,7 +106,9 @@ int main(int argc, char **argv) {
   // Lecture du terrain
   f = fopen(argv[1], "r");
   e = lire_terrain(f, &t, &x, &y);
-  fclose(f);
+  fclose(f); // There is an Error right here, if f is null when fopen fails so
+             // doing ./bin/robot_terrain /dontexist goes error code 139. This
+             // should be under the next if I believe.
 
   if (e != OK) {
     printf("Erreur lors de la lecture du terrain\n");
@@ -121,8 +123,8 @@ int main(int argc, char **argv) {
 
   printf("Entrer une action ([a]vancer, [g]auche, [d]roite, [f]in : ");
   scanf(" %c", &c);
-  while (c != 'f') {
-    int x, y; // Position devant
+  while (c != 'f') { // Shouldn't we check 'F' here too ?
+    int x, y;        // Position devant
     switch (c) {
     case 'G':
     case 'g':
