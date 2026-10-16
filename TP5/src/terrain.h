@@ -17,12 +17,15 @@ typedef struct {
 
 typedef enum {
   OK,
-  ERREUR_OUVERTURE,
-  ERREUR_LECTURE,
-  ERREUR_LECTURE_LARGEUR,
-  ERREUR_LECTURE_HAUTEUR,
-  ERREUR_MISMATCH,
-  ERREUR_CONTENT,
+  ERROR_DIMS,
+  ERROR_OPENING,
+  ERROR_READING,
+  ERROR_READING_WIDTH,
+  ERROR_READING_HEIGH,
+  ERROR_MISMATCH,
+  ERROR_CONTENT,
+  ERROR_TOO_MANY_RB,
+  ERROR_MISSING_RB,
 
 } erreur_terrain;
 
@@ -32,7 +35,7 @@ typedef enum {
    x, y position initiale du robot lue dans le fichier terrain
    Renvoie :
    OK si la lecture s'est déroulée correctement
-   ERREUR_FICHIER si le fichier n'a pas pu être ouvert
+   ERROR_FICHIER si le fichier n'a pas pu être ouvert
    ... (à compléter)
  */
 erreur_terrain lire_terrain(FILE *f, Terrain *t, int *x, int *y);

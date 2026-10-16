@@ -81,7 +81,33 @@ void afficher_terrain_et_robot(Terrain *t, Robot *r) {
 /* Renvoie vrai si le robot r, de sa position et orientation courante,
    peut avancer dans le terrain t */
 int robot_peut_avancer(Terrain *t, Robot *r) {
-  /* À compléter */
+  int width = t->largeur;
+  int height = t->hauteur;
+
+  for (int y = 0; y < height; y++) {
+
+    for (int x = 0; x < width; x++) {
+
+      char c;
+
+      switch (t->tab[x][y]) {
+      case LIBRE:
+        c = '.';
+        break;
+      case ROCHER:
+        c = '#';
+        break;
+      case EAU:
+        c = '~';
+        break;
+      default:
+        return;
+      }
+
+      printf("%c ", c);
+    }
+    printf("\n");
+  }
 
   return 0; /* À modifier */
 }

@@ -45,10 +45,31 @@ int main(int argc, char **argv) {
 
   printf("Entrer une action ([a]vancer, [g]auche, [d]roite, [f]in : ");
   scanf(" %c", &c);
+
+  // In the assignement those are uppercase, here lowercase... So I choose to
+  // normalize the treatment.
+  if (c >= 'A' && c <= 'Z') {
+    c = c - 'A' + 'a';
+  } // Here
   while (c != 'f') {
+    switch (c) {
+    case 'a':
+      avancer(&r);
+      break;
+    case 'g':
+      tourner_a_gauche(&r);
+      break;
+    case 'r':
+      tourner_a_droite(&r);
+      break;
+    case 'f':
+      break;
+    default:
+      printf("Error, this isn't a registered char in the robot vocabulary");
+      return 1;
+    }
 
-    /* À compléter */
-
+    afficher_infos_robot(&r);
     printf("Entrer une action ([a]vancer, [g]auche, [d]roite, [f]in : ");
     scanf(" %c", &c);
   }

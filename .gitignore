@@ -10,3 +10,5 @@ TD2
 *.html
 *.css
 .out
+build
+bin
